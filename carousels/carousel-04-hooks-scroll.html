@@ -267,7 +267,7 @@ async function preloadImages(html) {
   }
   if (!matches.length) return html;
   var dataUrls = await Promise.all(matches.map(function(r) {
-    return fetch(r.url, { mode: 'cors', cache: 'force-cache' })
+    return fetch(r.url, { mode: 'cors', cache: 'reload' })
       .then(function(resp) { return resp.blob(); })
       .then(function(blob) {
         return new Promise(function(resolve) {
