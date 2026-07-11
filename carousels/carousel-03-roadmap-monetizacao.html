@@ -254,9 +254,43 @@ async function dlAll() {
 }
 
 /* ── Capture slide to canvas via off-screen div ── */
+
+/* ── Pre-load external images as base64 data URIs (fixes CORS in html2canvas) ── */
+async function preloadImages(html) {
+  var imgRe = /(<img[^>]*?)src="(https?:\/\/[^"]+)"([^>]*?>)/gi;
+  var matches = [];
+  var m;
+  while ((m = imgRe.exec(html)) !== null) {
+    matches.push({ original: m[0], pre: m[1], url: m[2], post: m[3] });
+  }
+  if (!matches.length) return html;
+  var dataUrls = await Promise.all(matches.map(function(r) {
+    return fetch(r.url, { mode: 'cors', cache: 'force-cache' })
+      .then(function(resp) { return resp.blob(); })
+      .then(function(blob) {
+        return new Promise(function(resolve) {
+          var reader = new FileReader();
+          reader.onload = function() { resolve(reader.result); };
+          reader.readAsDataURL(blob);
+        });
+      })
+      .catch(function() { return null; });
+  }));
+  var result = html;
+  matches.forEach(function(r, i) {
+    if (dataUrls[i]) {
+      result = result.split(r.original).join(
+        r.pre + 'src="' + dataUrls[i] + '"' + r.post
+      );
+    }
+  });
+  return result;
+}
+
 async function captureSlide(i) {
+  var rawHtml=await preloadImages(S[i]);
   var dlDiv=document.getElementById('fi-dl');
-  dlDiv.innerHTML=scopeCSS(S[i]);
+  dlDiv.innerHTML=scopeCSS(rawHtml);
   // Force positioning via JS (beats any injected stylesheet)
   dlDiv.setAttribute('style','position:fixed;left:-4000px;top:0;width:1080px;height:1350px;overflow:hidden;background:#0D0B1E;pointer-events:none');
   await new Promise(function(r){setTimeout(r,600);});
