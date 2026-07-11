@@ -9,38 +9,125 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #060410; min-height: 100vh; font-family: 'DM Sans', sans-serif; color: #fff; }
-header { padding: 20px 24px; background: #0D0B1E; border-bottom: 1px solid #1E1535; display: flex; align-items: center; gap: 12px; }
+
+/* HEADER */
+header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid #1E1535; }
+.header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
 .brand-badge { width: 44px; height: 44px; background: linear-gradient(135deg, #442AC0, #FD296C); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: #fff; flex-shrink: 0; }
+.brand-info { flex: 1; }
 .brand-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
 .brand-title span { color: #442AC0; }
 .brand-sub { font-size: 13px; color: #7A6B9B; margin-top: 2px; }
+
+/* STATS */
+.stats-row { display: flex; gap: 12px; }
+.stat-pill { display: flex; align-items: center; gap: 6px; padding: 5px 12px; background: rgba(255,255,255,0.05); border: 1px solid #1E1535; border-radius: 100px; font-size: 12px; color: #9B8FC0; }
+.stat-pill strong { color: #fff; font-weight: 700; }
+.stat-pill.posted { border-color: rgba(68,192,100,0.3); background: rgba(68,192,100,0.08); color: #5EC87A; }
+.stat-pill.posted strong { color: #5EC87A; }
+
+/* FILTER BAR */
+.filter-bar { display: flex; gap: 8px; padding: 16px 24px; border-bottom: 1px solid #1E1535; background: #0D0B1E; }
+.filter-btn { padding: 7px 18px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; border: 1.5px solid #1E1535; background: transparent; color: #7A6B9B; cursor: pointer; transition: all .2s; }
+.filter-btn.active { background: linear-gradient(135deg, #442AC0, #6B3FE0); border-color: transparent; color: #fff; }
+.filter-btn:not(.active):hover { border-color: #442AC0; color: #9B8FD4; }
+
+/* GRID */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; padding: 32px 24px; max-width: 1400px; margin: 0 auto; }
+
+/* CARD */
+.card-wrap { position: relative; }
 .card { background: #0D0B1E; border: 1.5px solid #1E1535; border-radius: 16px; overflow: hidden; transition: border-color .2s, transform .2s, box-shadow .2s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
 .card:hover { border-color: #442AC0; transform: translateY(-3px); box-shadow: 0 12px 40px rgba(68,42,192,0.3); }
+.card-wrap.is-posted .card { border-color: rgba(68,192,100,0.4); }
+.card-wrap.is-posted .card:hover { border-color: #5EC87A; box-shadow: 0 12px 40px rgba(68,192,100,0.2); }
+
+/* THUMB */
 .thumb-wrap { position: relative; width: 100%; padding-bottom: 125%; background: #0D0B1E; overflow: hidden; }
 .thumb-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(6,4,16,0.3); opacity: 0; transition: opacity .2s; }
 .card:hover .play-overlay { opacity: 1; }
 .play-icon { width: 52px; height: 52px; background: linear-gradient(135deg,#442AC0,#FD296C); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-.card-body { padding: 16px 18px 18px; }
+
+/* POSTED BADGE */
+.posted-badge { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: #1A3D2B; border: 2px solid #5EC87A; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 16px; z-index: 10; }
+.card-wrap.is-posted .posted-badge { display: flex; }
+
+/* CARD BODY */
+.card-body { padding: 16px 18px 14px; }
 .card-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(68,42,192,0.15); border: 1px solid rgba(68,42,192,0.3); border-radius: 100px; font-size: 11px; font-weight: 700; color: #442AC0; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 10px; }
 .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.35; color: #fff; margin-bottom: 12px; }
-.card-meta { display: flex; align-items: center; justify-content: space-between; }
+.card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .slides-count { font-size: 12px; color: #7A6B9B; }
 .open-btn { display: flex; align-items: center; gap: 6px; padding: 7px 16px; background: linear-gradient(135deg,#442AC0,#FD296C); border-radius: 100px; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: #fff; }
-@media (max-width: 600px) { .grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px 12px; } .card-body { padding: 12px 14px 14px; } .card-title { font-size: 13px; } }
-@media (max-width: 380px) { .grid { grid-template-columns: 1fr; } }
+
+/* MARK BUTTON */
+.mark-btn { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; padding: 9px 0; border-radius: 10px; border: 1.5px solid #1E1535; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: #7A6B9B; cursor: pointer; transition: all .2s; margin-top: 2px; }
+.mark-btn:hover { border-color: #5EC87A; color: #5EC87A; background: rgba(68,192,100,0.06); }
+.card-wrap.is-posted .mark-btn { border-color: rgba(68,192,100,0.4); color: #5EC87A; background: rgba(68,192,100,0.08); }
+.card-wrap.is-posted .mark-btn:hover { background: rgba(68,192,100,0.04); color: #9B8FC0; border-color: #1E1535; }
+
+/* EMPTY STATE */
+.empty-state { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px; text-align: center; color: #7A6B9B; }
+.empty-state.visible { display: flex; }
+.empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+.empty-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: #4A3B6B; margin-bottom: 8px; }
+.empty-sub { font-size: 14px; color: #5A4B7B; }
+
+/* TOAST */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1E1535; border: 1px solid #442AC0; border-radius: 100px; padding: 12px 24px; font-size: 14px; font-weight: 600; color: #fff; z-index: 1000; transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s; opacity: 0; white-space: nowrap; pointer-events: none; }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toast.posted { border-color: #5EC87A; }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px 12px; }
+  .card-body { padding: 12px 14px 12px; }
+  .card-title { font-size: 13px; }
+  .open-btn { padding: 6px 12px; font-size: 11px; }
+  .stats-row { gap: 8px; flex-wrap: wrap; }
+  .filter-bar { padding: 12px 12px; gap: 6px; }
+  .filter-btn { padding: 6px 14px; font-size: 12px; }
+}
+@media (max-width: 380px) {
+  .grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
+
 <header>
-  <div class="brand-badge">iF</div>
-  <div>
-    <div class="brand-title"><span>ifans</span>.click — Posts</div>
-    <div class="brand-sub">Conteúdo para criadores digitais</div>
+  <div class="header-top">
+    <div class="brand-badge">iF</div>
+    <div class="brand-info">
+      <div class="brand-title"><span>ifans</span>.click &mdash; Posts</div>
+      <div class="brand-sub">Conteúdo para criadores digitais</div>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-pill"><strong id="stat-total">0</strong> posts</div>
+    <div class="stat-pill posted"><strong id="stat-posted">0</strong> postados</div>
+    <div class="stat-pill"><strong id="stat-remaining">0</strong> restantes</div>
   </div>
 </header>
-<div class="grid" id="grid"></div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">Todos</button>
+  <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">A postar</button>
+  <button class="filter-btn" data-filter="posted" onclick="setFilter('posted')">Postados</button>
+</div>
+
+<div id="grid-container">
+  <div class="grid" id="grid"></div>
+  <div class="empty-state" id="empty-state">
+    <div class="empty-icon">📭</div>
+    <div class="empty-title">Nada aqui ainda</div>
+    <div class="empty-sub" id="empty-sub">Nenhum post encontrado neste filtro.</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
 const POSTS = [
   { id: 'carousel-01-formatos-virais', title: 'Os 5 formatos de Reel que mais viralizam', tag: 'Formatos', slides: 7, cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-01-formatos-virais.png' },
@@ -49,14 +136,128 @@ const POSTS = [
   { id: 'carousel-04-hooks-scroll', title: 'Os ganchos que param o scroll', tag: 'Hooks', slides: 7, cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-04-hooks-scroll.png' },
   { id: 'carousel-05-metricas-importantes', title: 'As métricas que realmente importam', tag: 'Métricas', slides: 7, cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-05-metricas-importantes.png' }
 ];
-const grid = document.getElementById('grid');
-POSTS.forEach(post => {
-  const card = document.createElement('a');
-  card.href = `carousels/${post.id}.html`;
-  card.className = 'card';
-  card.innerHTML = `<div class="thumb-wrap"><img class="thumb-cover" src="${post.cover}"><div class="play-overlay"><div class="play-icon">▶</div></div></div><div class="card-body"><div class="card-tag">📱 ${post.tag}</div><div class="card-title">${post.title}</div><div class="card-meta"><span class="slides-count">${post.slides} slides</span><div class="open-btn">Ver + baixar →</div></div></div>`;
-  grid.appendChild(card);
+
+/* ---- STORAGE ---- */
+const STORAGE_KEY = 'ifans_posted_v1';
+function getPosted() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; } }
+function setPosted(arr) { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+function isPosted(id) { return getPosted().indexOf(id) !== -1; }
+function togglePosted(id) {
+  var posted = getPosted();
+  var idx = posted.indexOf(id);
+  if (idx === -1) posted.push(id); else posted.splice(idx, 1);
+  setPosted(posted);
+}
+
+/* ---- FILTER ---- */
+var currentFilter = 'all';
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.filter === f);
+  });
+  applyFilter();
+}
+function applyFilter() {
+  var wraps = document.querySelectorAll('.card-wrap');
+  var visible = 0;
+  wraps.forEach(function(wrap) {
+    var id = wrap.dataset.id;
+    var posted = isPosted(id);
+    var show = currentFilter === 'all' || (currentFilter === 'posted' && posted) || (currentFilter === 'pending' && !posted);
+    wrap.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  var empty = document.getElementById('empty-state');
+  var grid = document.getElementById('grid');
+  if (visible === 0) {
+    empty.classList.add('visible');
+    grid.style.display = 'none';
+    var sub = document.getElementById('empty-sub');
+    if (currentFilter === 'posted') sub.textContent = 'Nenhum post marcado como postado ainda.';
+    else if (currentFilter === 'pending') sub.textContent = 'Todos os posts já foram postados!';
+    else sub.textContent = 'Nenhum post encontrado.';
+  } else {
+    empty.classList.remove('visible');
+    grid.style.display = '';
+  }
+}
+
+/* ---- STATS ---- */
+function updateStats() {
+  var total = POSTS.length;
+  var posted = getPosted().length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-posted').textContent = posted;
+  document.getElementById('stat-remaining').textContent = Math.max(0, total - posted);
+}
+
+/* ---- UPDATE CARD ---- */
+function updateCard(id) {
+  var wrap = document.querySelector('.card-wrap[data-id="' + id + '"]');
+  if (!wrap) return;
+  var posted = isPosted(id);
+  wrap.classList.toggle('is-posted', posted);
+  var btn = wrap.querySelector('.mark-btn');
+  if (btn) btn.textContent = posted ? '✅ Postado — clique para desmarcar' : '○ Marcar como postado';
+}
+
+/* ---- MARK HANDLER ---- */
+function handleMark(e, id) {
+  e.preventDefault();
+  e.stopPropagation();
+  togglePosted(id);
+  updateCard(id);
+  updateStats();
+  applyFilter();
+  showToast(isPosted(id) ? '✅ Marcado como postado!' : '○ Desmarcado', isPosted(id));
+}
+
+/* ---- TOAST ---- */
+var toastTimer;
+function showToast(msg, isGood) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isGood ? ' posted' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { t.className = 'toast'; }, 2400);
+}
+
+/* ---- RENDER CARDS ---- */
+var grid = document.getElementById('grid');
+POSTS.forEach(function(post) {
+  var posted = isPosted(post.id);
+
+  var wrap = document.createElement('div');
+  wrap.className = 'card-wrap' + (posted ? ' is-posted' : '');
+  wrap.dataset.id = post.id;
+
+  wrap.innerHTML =
+    '<div class="posted-badge">✅</div>' +
+    '<a class="card" href="carousels/' + post.id + '.html">' +
+      '<div class="thumb-wrap">' +
+        '<img class="thumb-cover" src="' + post.cover + '" loading="lazy" alt="' + post.title + '">' +
+        '<div class="play-overlay"><div class="play-icon">▶</div></div>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<div class="card-tag">📱 ' + post.tag + '</div>' +
+        '<div class="card-title">' + post.title + '</div>' +
+        '<div class="card-meta">' +
+          '<span class="slides-count">' + post.slides + ' slides</span>' +
+          '<div class="open-btn">Ver + baixar →</div>' +
+        '</div>' +
+      '</div>' +
+    '</a>' +
+    '<button class="mark-btn" onclick="handleMark(event,\'' + post.id + '\')">' +
+      (posted ? '✅ Postado — clique para desmarcar' : '○ Marcar como postado') +
+    '</button>';
+
+  grid.appendChild(wrap);
 });
+
+/* ---- INIT ---- */
+updateStats();
+applyFilter();
 </script>
 </body>
 </html>
