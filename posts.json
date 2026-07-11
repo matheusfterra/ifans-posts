@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "updated": "2026-07-11",
+  "description": "Registro de posts do ifans.click. Para adicionar novo post: (1) colocar HTML em carousels/, (2) adicionar entrada neste JSON, (3) atualizar index.html POSTS array, (4) push para main.",
+  "posts": [
+    {
+      "id": "carousel-01-formatos-virais",
+      "title": "Os 5 formatos de Reel que mais viralizam AGORA",
+      "tag": "viralizacao",
+      "slides": 7,
+      "date": "2026-07-11",
+      "file": "carousels/carousel-01-formatos-virais.html",
+      "cortex_source": "/cortex/files/ifans/carousels/carousel-01-formatos-virais.html"
+    },
+    {
+      "id": "carousel-02-erros-engajamento",
+      "title": "Por que seu conteúdo não engaja (e o que fazer hoje)",
+      "tag": "engajamento",
+      "slides": 7,
+      "date": "2026-07-11",
+      "file": "carousels/carousel-02-erros-engajamento.html",
+      "cortex_source": "/cortex/files/ifans/carousels/carousel-02-erros-engajamento.html"
+    },
+    {
+      "id": "carousel-03-roadmap-monetizacao",
+      "title": "De 0 a criador monetizado: o roadmap honesto",
+      "tag": "monetizacao",
+      "slides": 7,
+      "date": "2026-07-11",
+      "file": "carousels/carousel-03-roadmap-monetizacao.html",
+      "cortex_source": "/cortex/files/ifans/carousels/carousel-03-roadmap-monetizacao.html"
+    },
+    {
+      "id": "carousel-04-hooks-scroll",
+      "title": "Os ganchos que param o scroll (com templates reais)",
+      "tag": "copywriting",
+      "slides": 7,
+      "date": "2026-07-11",
+      "file": "carousels/carousel-04-hooks-scroll.html",
+      "cortex_source": "/cortex/files/ifans/carousels/carousel-04-hooks-scroll.html"
+    },
+    {
+      "id": "carousel-05-metricas-importantes",
+      "title": "As métricas que realmente importam pra crescer",
+      "tag": "analytics",
+      "slides": 7,
+      "date": "2026-07-11",
+      "file": "carousels/carousel-05-metricas-importantes.html",
+      "cortex_source": "/cortex/files/ifans/carousels/carousel-05-metricas-importantes.html"
+    }
+  ]
+}
