@@ -7,68 +7,82 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:#060410;min-height:100vh;font-family:'DM Sans',sans-serif;color:#fff;overscroll-behavior:none}
+/* TOP NAV */
 .topnav{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#0D0B1E;border-bottom:1px solid #1E1535;position:sticky;top:0;z-index:100}
 .topnav a{display:flex;align-items:center;gap:8px;text-decoration:none}
 .brand-s{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#442AC0}
 .brand-e{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:#fff}
-.back-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:#1E1535;border:none;border-radius:100px;color:#9B8DC0;font-size:13px;cursor:pointer;text-decoration:none;transition:all .2s}
-/* STAGE — slide container */
-.stage{position:relative;width:100%;background:#060410;touch-action:pan-y}
+.back-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:#1E1535;border:none;border-radius:100px;color:#9B8DC0;font-size:13px;cursor:pointer;text-decoration:none}
+/* STAGE */
+.stage{width:100%;touch-action:pan-y;position:relative}
 .frame-outer{
   position:relative;
   width:100%;
+  /* height set by JS for 1080:1350 ratio */
   overflow:hidden;
   background:#0D0B1E;
-  /* aspect-ratio mantém proporção 4:5 (1080x1350) */
-  aspect-ratio:1080/1350;
 }
+/* IFRAME — isolated container for slide content */
 #fi{
   position:absolute;
   top:0;left:0;
-  width:1080px;height:1350px;
+  width:1080px;
+  height:1350px;
+  border:none;
   transform-origin:top left;
-  overflow:hidden;
+  display:block;
 }
-/* ARROWS */
-.arr{position:absolute;top:50%;transform:translateY(-50%);z-index:20;width:40px;height:64px;display:flex;align-items:center;justify-content:center;background:rgba(13,11,30,.75);backdrop-filter:blur(6px);border:1px solid rgba(68,42,192,.3);cursor:pointer;transition:all .2s;user-select:none}
-.arr:hover{background:rgba(68,42,192,.4)}
-.arr.hidden{display:none}
-.arr-l{left:0;border-radius:0 8px 8px 0;border-left:none}
-.arr-r{right:0;border-radius:8px 0 0 8px;border-right:none}
-.arr svg{width:18px;height:18px;fill:#fff}
-/* INFO */
+/* HIDDEN DIV for html2canvas downloads */
+#fi-dl{
+  position:fixed;
+  left:-4000px;
+  top:0;
+  width:1080px;
+  height:1350px;
+  overflow:hidden;
+  background:#0D0B1E;
+  pointer-events:none;
+}
+/* NAV ARROWS */
+.arr{position:absolute;top:50%;transform:translateY(-50%);z-index:20;width:44px;height:72px;display:flex;align-items:center;justify-content:center;background:rgba(13,11,30,.8);backdrop-filter:blur(6px);border:1px solid rgba(68,42,192,.25);cursor:pointer;user-select:none;transition:background .2s}
+.arr:hover{background:rgba(68,42,192,.5)}
+.arr.hidden{display:none!important}
+.arr-l{left:0;border-radius:0 10px 10px 0;border-left:none}
+.arr-r{right:0;border-radius:10px 0 0 10px;border-right:none}
+.arr svg{width:20px;height:20px;fill:#fff}
+/* INFO ROW */
 .info-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 0}
-.counter{font-size:12px;color:#7A6B9B;white-space:nowrap}
-.dots{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.dot{height:8px;border-radius:4px;background:#1E1535;cursor:pointer;border:none;padding:0;transition:all .2s;flex-shrink:0}
+.counter{font-size:12px;color:#7A6B9B}
+.dots{display:flex;gap:6px;align-items:center}
+.dot{height:8px;border-radius:4px;background:#1E1535;cursor:pointer;border:none;padding:0;transition:all .2s}
 /* CAPTION */
 .cap-section{margin:10px 14px 0;background:#0D0B1E;border:1.5px solid #1E1535;border-radius:12px;overflow:hidden}
 .cap-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;user-select:none}
 .cap-label{font-size:12px;font-weight:700;color:#7A6B9B;letter-spacing:.06em;text-transform:uppercase}
-.cap-toggle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:#1E1535;border-radius:8px;color:#9B8DC0;font-size:16px;transition:transform .3s;flex-shrink:0}
-.cap-toggle.open{transform:rotate(180deg)}
+.cap-tog{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:#1E1535;border-radius:8px;color:#9B8DC0;font-size:14px;transition:transform .3s}
+.cap-tog.open{transform:rotate(180deg)}
 .cap-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
-.cap-body.open{max-height:400px}
+.cap-body.open{max-height:500px}
 .cap-txt{padding:0 14px 14px;font-size:13px;line-height:1.7;color:#C8BEE0;white-space:pre-line;word-break:break-word}
 /* PROGRESS */
 .prog-wrap{display:none;padding:0 14px;margin-top:8px}
 .prog-track{height:4px;background:#1E1535;border-radius:2px;overflow:hidden}
 .prog-fill{height:100%;background:linear-gradient(90deg,#442AC0,#FD296C);width:0%;transition:width .3s;border-radius:2px}
 .prog-lbl{font-size:11px;color:#7A6B9B;margin-top:4px;text-align:center}
-/* STICKY BOTTOM BAR */
-.action-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#0D0B1E;border-top:1.5px solid #1E1535;padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center}
-.btn-main{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 0;background:linear-gradient(135deg,#442AC0,#FD296C);border:none;border-radius:12px;color:#fff;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;min-height:48px}
-.btn-main:hover{opacity:.9}
-.btn-main.loading{opacity:.6;cursor:wait}
-.btn-sec{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 16px;background:#1E1535;border:1.5px solid #2A1F4A;border-radius:12px;color:#9B8DC0;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;min-height:48px;white-space:nowrap}
-.btn-sec:hover{border-color:#442AC0;color:#fff}
+/* STICKY ACTION BAR */
+.action-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#0D0B1E;border-top:1.5px solid #1E1535;padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px}
+.btn-dl{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 0;height:48px;background:linear-gradient(135deg,#442AC0,#FD296C);border:none;border-radius:12px;color:#fff;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.btn-dl:hover{opacity:.9}
+.btn-dl.loading{opacity:.6;cursor:wait}
+.btn-all{display:flex;align-items:center;justify-content:center;gap:6px;padding:0 16px;height:48px;background:#1E1535;border:1.5px solid #2A1F4A;border-radius:12px;color:#9B8DC0;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-all:hover{border-color:#442AC0;color:#fff}
 .btn-copy{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#1E1535;border:1.5px solid #2A1F4A;border-radius:12px;color:#9B8DC0;font-size:18px;cursor:pointer;transition:all .2s;flex-shrink:0}
-.btn-copy:hover,.btn-copy.ok{border-color:#22C55E;color:#22C55E}
-.spacer{height:90px}
+.btn-copy.ok{border-color:#22C55E;color:#22C55E}
+.spacer{height:84px}
 /* TOAST */
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:#1E1535;border:1px solid #442AC0;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;z-index:300;white-space:nowrap}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(8px);background:#1A1230;border:1px solid #442AC0;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;opacity:0;transition:all .25s;pointer-events:none;z-index:300;white-space:nowrap;box-shadow:0 4px 20px rgba(68,42,192,.4)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-/* Desktop centering */
+/* Desktop */
 @media(min-width:640px){
   .stage,.info-row,.cap-section,.prog-wrap{max-width:540px;margin-left:auto;margin-right:auto}
   .cap-section{margin:10px auto 0}
@@ -83,15 +97,16 @@ body{background:#060410;min-height:100vh;font-family:'DM Sans',sans-serif;color:
 </nav>
 <div class="stage" id="stage">
   <div class="frame-outer" id="fo">
-    <div id="fi"></div>
-    <button class="arr arr-l hidden" id="pb" onclick="go(-1)" aria-label="Slide anterior">
+    <iframe id="fi" scrolling="no"></iframe>
+    <button class="arr arr-l hidden" id="pb" onclick="go(-1)">
       <svg viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
     </button>
-    <button class="arr arr-r" id="nb2" onclick="go(1)" aria-label="Próximo slide">
+    <button class="arr arr-r" id="nb2" onclick="go(1)">
       <svg viewBox="0 0 24 24"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
     </button>
   </div>
 </div>
+<div id="fi-dl"></div>
 <div class="info-row">
   <span class="counter" id="ct">Slide 1 de 7</span>
   <div class="dots" id="dr"></div>
@@ -101,9 +116,9 @@ body{background:#060410;min-height:100vh;font-family:'DM Sans',sans-serif;color:
   <div class="prog-lbl" id="pgl">Exportando...</div>
 </div>
 <div class="cap-section">
-  <div class="cap-header" onclick="toggleCap()" role="button">
-    <span class="cap-label">📋 Legenda</span>
-    <span class="cap-toggle" id="cap-tog">▼</span>
+  <div class="cap-header" onclick="toggleCap()">
+    <span class="cap-label">📋 Legenda para publicar</span>
+    <span class="cap-tog" id="cap-tog">▼</span>
   </div>
   <div class="cap-body" id="cap-body">
     <div class="cap-txt" id="capTxt"></div>
@@ -112,8 +127,8 @@ body{background:#060410;min-height:100vh;font-family:'DM Sans',sans-serif;color:
 <div class="spacer"></div>
 <div class="toast" id="toast"></div>
 <div class="action-bar">
-  <button class="btn-main" id="dlb" onclick="dlCurrent()">⬇ Baixar slide</button>
-  <button class="btn-sec" id="dla" onclick="dlAll()">⬇ Todos (7)</button>
+  <button class="btn-dl" id="dlb" onclick="dlCurrent()">⬇ Baixar slide</button>
+  <button class="btn-all" id="dla" onclick="dlAll()">⬇ Todos (7)</button>
   <button class="btn-copy" id="cpb" onclick="copyC()" title="Copiar legenda">📋</button>
 </div>
 <script>
@@ -121,114 +136,146 @@ const S=["<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link h
 const CAP=``,N=7;
 let cur=0;
 
-// CRITICAL: Scope slide CSS to #fi to prevent body/global style pollution
-function injectSlide(el, html) {
-  // Replace CSS body selector with #fi so slide styles don't bleed into page
-  const scoped = html.replace(
-    /(<style[^>]*>)([\s\S]*?)(<\/style>)/gi,
-    (_, open, css, close) => open + css.replace(/body/g, '#fi') + close
-  );
-  el.innerHTML = scoped;
+/* ── Build complete isolated HTML document for iframe ── */
+function buildDoc(html) {
+  // Strip font links and style tags from slide (we provide them in iframe head)
+  const body = html
+    .replace(/<link[^>]*fonts\.googleapis[^>]*>/gi,'')
+    .replace(/<link[^>]*fonts\.gstatic[^>]*>/gi,'')
+    .replace(/<style[\s\S]*?<\/style>/gi,'');
+  return '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+    + '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    + '<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">'
+    + '<style>*{margin:0;padding:0;box-sizing:border-box}'
+    + 'html,body{width:1080px;height:1350px;overflow:hidden;position:relative;background:#0D0B1E;font-family:\'DM Sans\',sans-serif}'
+    + '</style></head><body>' + body + '</body></html>';
 }
 
-function scaleVal() {
-  const fo = document.getElementById('fo');
-  return fo.offsetWidth / 1080;
+/* ── Scope slide CSS for off-screen download div ── */
+function scopeCSS(html) {
+  return html.replace(
+    /(<style[^>]*>)([\s\S]*?)(<\/style>)/gi,
+    function(_, open, css, close) {
+      var scoped = css
+        .replace(/\*\s*\{/g, '#fi-dl *{')   // scope * reset
+        .replace(/body/g,  '#fi-dl')       // scope body
+        .replace(/html/g,  '#fi-dl');      // scope html
+      return open + scoped + close;
+    }
+  );
 }
+
+/* ── Scale frame-outer height + iframe transform ── */
 function applyScale() {
-  const fi = document.getElementById('fi');
-  fi.style.transform = `scale(${scaleVal()})`;
+  var fo = document.getElementById('fo');
+  var w = fo.offsetWidth || window.innerWidth;
+  var scale = w / 1080;
+  fo.style.height = Math.round(1350 * scale) + 'px';
+  document.getElementById('fi').style.transform = 'scale(' + scale + ')';
 }
-function render(i) {
-  const fi = document.getElementById('fi');
-  injectSlide(fi, S[i]);
-  applyScale();
-  document.getElementById('ct').textContent = `Slide ${i+1} de ${N}`;
+
+function updateNav(i) {
+  document.getElementById('ct').textContent = 'Slide ' + (i+1) + ' de ' + N;
   document.getElementById('pb').classList.toggle('hidden', i === 0);
   document.getElementById('nb2').classList.toggle('hidden', i === N-1);
-  const dr = document.getElementById('dr'); dr.innerHTML = '';
-  for (let j = 0; j < N; j++) {
-    const d = document.createElement('button');
-    d.className = 'dot';
+  var dr = document.getElementById('dr'); dr.innerHTML = '';
+  for (var j=0; j<N; j++) {
+    var d = document.createElement('button'); d.className='dot';
     d.style.width = j===i ? '22px' : '8px';
     d.style.background = j===i ? '#442AC0' : '#1E1535';
-    d.onclick = () => goTo(j);
+    d.onclick = (function(idx){ return function(){ goTo(idx); }; })(j);
     dr.appendChild(d);
   }
 }
-function goTo(i) { cur=i; render(cur); }
-function go(d) { const n=cur+d; if(n>=0&&n<N) goTo(n); }
+
+function render(i) {
+  document.getElementById('fi').srcdoc = buildDoc(S[i]);
+  applyScale();
+  updateNav(i);
+}
+
+function goTo(i) { cur=i; render(i); }
+function go(d) { var n=cur+d; if(n>=0&&n<N) goTo(n); }
+
 function toggleCap() {
-  const b=document.getElementById('cap-body'), t=document.getElementById('cap-tog');
-  const open=b.classList.toggle('open');
-  t.classList.toggle('open',open);
+  var b=document.getElementById('cap-body'), t=document.getElementById('cap-tog');
+  var open=b.classList.toggle('open'); t.classList.toggle('open',open);
 }
 function showToast(msg) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2500);
+  var t=document.getElementById('toast'); t.textContent=msg;
+  t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2500);
 }
 
-// Download current slide at FULL 1080x1350 resolution
+/* ── Download CURRENT slide (full 1080×1350 via hidden div + html2canvas) ── */
 async function dlCurrent() {
-  const btn=document.getElementById('dlb');
+  var btn=document.getElementById('dlb');
   btn.textContent='⏳...'; btn.classList.add('loading');
-  const fi=document.getElementById('fi');
-  const saved=fi.style.transform;
-  fi.style.transform='scale(1)'; // render at full res for download
-  await new Promise(r=>requestAnimationFrame(r));
   try {
-    const c=await html2canvas(fi,{width:1080,height:1350,scale:2,useCORS:true,allowTaint:true,backgroundColor:'#0D0B1E',logging:false});
-    const a=document.createElement('a');
-    a.download=`ifans-carousel-01-formatos-virais-s${cur+1}.png`;
-    a.href=c.toDataURL('image/png'); a.click();
+    var canvas = await captureSlide(cur);
+    var a=document.createElement('a');
+    a.download='ifans-carousel-01-formatos-virais-s'+(cur+1)+'.png';
+    a.href=canvas.toDataURL('image/png'); a.click();
     showToast('✅ Slide baixado!');
   } catch(e) { showToast('Erro: '+e.message); }
-  fi.style.transform=saved;
+  btn.textContent='⬇ Baixar slide'; btn.classList.remove('loading');
 }
 
-// Download ALL slides at full resolution
+/* ── Download ALL slides ── */
 async function dlAll() {
-  const btn=document.getElementById('dla'), pgw=document.getElementById('pgw'), bar=document.getElementById('pb2'), lbl=document.getElementById('pgl');
+  var btn=document.getElementById('dla'), pgw=document.getElementById('pgw'),
+      bar=document.getElementById('pb2'), lbl=document.getElementById('pgl');
   btn.textContent='⏳...'; btn.disabled=true; pgw.style.display='block'; bar.style.width='0%';
-  const fi=document.getElementById('fi'); const sv=cur;
-  for(let i=0;i<N;i++) {
-    injectSlide(fi, S[i]);
-    fi.style.transform='scale(1)';
-    await new Promise(r=>setTimeout(r,500));
+  for(var i=0;i<N;i++) {
     try {
-      const c=await html2canvas(fi,{width:1080,height:1350,scale:2,useCORS:true,allowTaint:true,backgroundColor:'#0D0B1E',logging:false});
-      const a=document.createElement('a'); a.download=`ifans-carousel-01-formatos-virais-s${i+1}.png`; a.href=c.toDataURL('image/png'); a.click();
-      await new Promise(r=>setTimeout(r,300));
+      var canvas=await captureSlide(i);
+      var a=document.createElement('a'); a.download='ifans-carousel-01-formatos-virais-s'+(i+1)+'.png';
+      a.href=canvas.toDataURL('image/png'); a.click();
+      await new Promise(function(r){setTimeout(r,300);});
     } catch(e) { console.error(e); }
-    bar.style.width=`${Math.round(((i+1)/N)*100)}%`;
-    lbl.textContent=`Slide ${i+1} de ${N} exportado`;
+    bar.style.width=Math.round(((i+1)/N)*100)+'%';
+    lbl.textContent='Slide '+(i+1)+' de '+N+' exportado';
   }
-  goTo(sv);
-  setTimeout(()=>{ pgw.style.display='none'; }, 2500);
-  btn.textContent='✅ Pronto!'; showToast(`✅ ${N} slides baixados!`);
-  setTimeout(()=>{ btn.textContent=`⬇ Todos (${N})`; btn.disabled=false; }, 3000);
+  setTimeout(function(){pgw.style.display='none';},2500);
+  btn.textContent='✅ Pronto!'; showToast('✅ '+N+' slides baixados!');
+  setTimeout(function(){btn.textContent='⬇ Todos (7)';btn.disabled=false;},3000);
 }
+
+/* ── Capture slide to canvas via off-screen div ── */
+async function captureSlide(i) {
+  var dlDiv=document.getElementById('fi-dl');
+  dlDiv.innerHTML=scopeCSS(S[i]);
+  // Force positioning via JS (beats any injected stylesheet)
+  dlDiv.setAttribute('style','position:fixed;left:-4000px;top:0;width:1080px;height:1350px;overflow:hidden;background:#0D0B1E;pointer-events:none');
+  await new Promise(function(r){setTimeout(r,600);});
+  var canvas=await html2canvas(dlDiv,{
+    width:1080,height:1350,scale:2,
+    useCORS:true,allowTaint:true,
+    backgroundColor:'#0D0B1E',logging:false
+  });
+  dlDiv.innerHTML='';
+  return canvas;
+}
+
 function copyC() {
-  navigator.clipboard.writeText(CAP).then(()=>{
-    const b=document.getElementById('cpb'); b.textContent='✅'; b.classList.add('ok');
+  navigator.clipboard.writeText(CAP).then(function(){
+    var b=document.getElementById('cpb'); b.textContent='✅'; b.classList.add('ok');
     showToast('📋 Legenda copiada!');
-    setTimeout(()=>{ b.textContent='📋'; b.classList.remove('ok'); }, 2500);
+    setTimeout(function(){b.textContent='📋';b.classList.remove('ok');},2500);
   });
 }
 
-document.getElementById('capTxt').textContent = CAP;
-// Wait for layout to be ready before first render
-requestAnimationFrame(()=>{ render(0); });
+/* ── Init ── */
+document.getElementById('capTxt').textContent=CAP;
+requestAnimationFrame(function(){ render(0); });
+window.addEventListener('resize', applyScale);
 
-// Swipe support
-let tx=0;
-const stage=document.getElementById('stage');
-stage.addEventListener('touchstart',e=>{ tx=e.changedTouches[0].clientX; },{passive:true});
-stage.addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-tx;
+/* ── Touch swipe ── */
+var tx=0;
+var stage=document.getElementById('stage');
+stage.addEventListener('touchstart',function(e){tx=e.changedTouches[0].clientX;},{passive:true});
+stage.addEventListener('touchend',function(e){
+  var dx=e.changedTouches[0].clientX-tx;
   if(Math.abs(dx)>40) go(dx<0?1:-1);
 },{passive:true});
-window.addEventListener('resize',applyScale);
-document.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft')go(-1); if(e.key==='ArrowRight')go(1); });
+document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1);});
 </script></body></html>
