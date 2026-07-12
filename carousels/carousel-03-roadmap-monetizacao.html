@@ -253,6 +253,23 @@ async function dlAll() {
   setTimeout(function(){btn.textContent='⬇ Todos (7)';btn.disabled=false;},3000);
 }
 
+
+/* ── Transform slide HTML for reliable html2canvas capture ── */
+function downloadTransform(html) {
+  var scoped = html.replace(
+    /(<style[^>]*>)([\s\S]*?)(<\/style>)/gi,
+    function(_, open, css, close) {
+      return open + css
+        .replace(/\*\s*\{/g, '#fi-dl *{')   // scope * reset to #fi-dl
+        .replace(/\bhtml\b/g, '#fi-dl')      // scope html
+        .replace(/\bbody\b/g, '.slide-root') // scope body → .slide-root (fixing % calc)
+        + close;
+    }
+  );
+  // Wrap in .slide-root so height:calc(100% - Npx) resolves to 1350px, not viewport
+  return '<div class="slide-root" style="position:relative;width:1080px;height:1350px;overflow:hidden;background:#0D0B1E;font-family:\'DM Sans\',sans-serif;">' + scoped + '</div>';
+}
+
 /* ── Capture slide to canvas via off-screen div ── */
 
 /* ── Pre-load external images as base64 data URIs (fixes CORS in html2canvas) ── */
@@ -290,12 +307,14 @@ async function preloadImages(html) {
 async function captureSlide(i) {
   var rawHtml=await preloadImages(S[i]);
   var dlDiv=document.getElementById('fi-dl');
-  dlDiv.innerHTML=scopeCSS(rawHtml);
-  // Force positioning via JS (beats any injected stylesheet)
-  dlDiv.setAttribute('style','position:fixed;left:-4000px;top:0;width:1080px;height:1350px;overflow:hidden;background:#0D0B1E;pointer-events:none');
+  dlDiv.innerHTML=downloadTransform(rawHtml);
+  // Position above viewport so user can't see it; left:0 keeps geometry clean
+  dlDiv.setAttribute('style','position:fixed;left:0;top:-1400px;pointer-events:none;background:transparent;');
   await new Promise(function(r){setTimeout(r,600);});
-  var canvas=await html2canvas(dlDiv,{
-    width:1080,height:1350,scale:2,
+  // Capture .slide-root: position:relative + explicit 1350px → calc(100%) = 1350px ✓
+  var slideRoot=dlDiv.querySelector('.slide-root');
+  var canvas=await html2canvas(slideRoot,{
+    scale:1,
     useCORS:true,allowTaint:true,
     backgroundColor:'#0D0B1E',logging:false
   });
