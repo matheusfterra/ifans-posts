@@ -1,52 +1,82 @@
 {
-  "version": "1.0",
-  "updated": "2026-07-11",
-  "description": "Registro de posts do ifans.click. Para adicionar novo post: (1) colocar HTML em carousels/, (2) adicionar entrada neste JSON, (3) atualizar index.html POSTS array, (4) push para main.",
+  "version": "2.0",
+  "updated": "2026-07-13",
+  "description": "Registro de posts das contas ifans. REGRA: todo post deve ter 'profile' (ifans.click | ifans.virals) e 'type' (carousel | reel). ifans.click = carrosséis de conteúdo educativo. ifans.virals = reels com overlay de alerta viral. Para adicionar: (1) colocar arquivo em carousels/ ou fazer upload do MP4 no S3, (2) adicionar entrada neste JSON com profile e type corretos, (3) atualizar array POSTS em index.html, (4) push para main.",
   "posts": [
     {
       "id": "carousel-01-formatos-virais",
+      "profile": "ifans.click",
+      "type": "carousel",
       "title": "Os 5 formatos de Reel que mais viralizam AGORA",
       "tag": "viralizacao",
       "slides": 7,
       "date": "2026-07-11",
       "file": "carousels/carousel-01-formatos-virais.html",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-01-formatos-virais.png",
       "cortex_source": "/cortex/files/ifans/carousels/carousel-01-formatos-virais.html"
     },
     {
       "id": "carousel-02-erros-engajamento",
+      "profile": "ifans.click",
+      "type": "carousel",
       "title": "Por que seu conteúdo não engaja (e o que fazer hoje)",
       "tag": "engajamento",
       "slides": 7,
       "date": "2026-07-11",
       "file": "carousels/carousel-02-erros-engajamento.html",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-02-erros-engajamento.png",
       "cortex_source": "/cortex/files/ifans/carousels/carousel-02-erros-engajamento.html"
     },
     {
       "id": "carousel-03-roadmap-monetizacao",
+      "profile": "ifans.click",
+      "type": "carousel",
       "title": "De 0 a criador monetizado: o roadmap honesto",
       "tag": "monetizacao",
       "slides": 7,
       "date": "2026-07-11",
       "file": "carousels/carousel-03-roadmap-monetizacao.html",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-03-roadmap-monetizacao.png",
       "cortex_source": "/cortex/files/ifans/carousels/carousel-03-roadmap-monetizacao.html"
     },
     {
       "id": "carousel-04-hooks-scroll",
+      "profile": "ifans.click",
+      "type": "carousel",
       "title": "Os ganchos que param o scroll (com templates reais)",
       "tag": "copywriting",
       "slides": 7,
       "date": "2026-07-11",
       "file": "carousels/carousel-04-hooks-scroll.html",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-04-hooks-scroll.png",
       "cortex_source": "/cortex/files/ifans/carousels/carousel-04-hooks-scroll.html"
     },
     {
       "id": "carousel-05-metricas-importantes",
+      "profile": "ifans.click",
+      "type": "carousel",
       "title": "As métricas que realmente importam pra crescer",
       "tag": "analytics",
       "slides": 7,
       "date": "2026-07-11",
       "file": "carousels/carousel-05-metricas-importantes.html",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-05-metricas-importantes.png",
       "cortex_source": "/cortex/files/ifans/carousels/carousel-05-metricas-importantes.html"
+    },
+    {
+      "id": "reel-DJ_7mZkN5M8-overlay-v9",
+      "profile": "ifans.virals",
+      "type": "reel",
+      "title": "Reel viral com overlay Alerta de Vídeo Viral",
+      "tag": "viral",
+      "duration_s": 10.38,
+      "date": "2026-07-13",
+      "video_url": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DJ_7mZkN5M8-overlay-v9.mp4",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reels/covers/DJ_7mZkN5M8-overlay-v9-cover.png",
+      "overlay_version": "v9",
+      "source_reel": "DJ_7mZkN5M8",
+      "cortex_source": "/cortex/files/ifans/reels/DJ_7mZkN5M8.mp4",
+      "cortex_overlay": "/cortex/files/ifans/reels/overlay-v9.png"
     }
   ]
 }

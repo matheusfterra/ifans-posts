@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ifans.click — Posts</title>
+<title>iFans — Posts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -16,21 +16,34 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
 .brand-badge { width: 44px; height: 44px; background: linear-gradient(135deg, #442AC0, #FD296C); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: #fff; flex-shrink: 0; }
 .brand-info { flex: 1; }
 .brand-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
-.brand-title span { color: #442AC0; }
+.brand-title .accent { color: #442AC0; }
+.brand-title .viral { color: #FD296C; }
 .brand-sub { font-size: 13px; color: #7A6B9B; margin-top: 2px; }
 
 /* STATS */
-.stats-row { display: flex; gap: 12px; }
+.stats-row { display: flex; gap: 12px; flex-wrap: wrap; }
 .stat-pill { display: flex; align-items: center; gap: 6px; padding: 5px 12px; background: rgba(255,255,255,0.05); border: 1px solid #1E1535; border-radius: 100px; font-size: 12px; color: #9B8FC0; }
 .stat-pill strong { color: #fff; font-weight: 700; }
 .stat-pill.posted { border-color: rgba(68,192,100,0.3); background: rgba(68,192,100,0.08); color: #5EC87A; }
 .stat-pill.posted strong { color: #5EC87A; }
+.stat-pill.click-pill { border-color: rgba(68,42,192,0.4); background: rgba(68,42,192,0.1); color: #8B7FD0; }
+.stat-pill.click-pill strong { color: #8B7FD0; }
+.stat-pill.virals-pill { border-color: rgba(253,41,108,0.4); background: rgba(253,41,108,0.1); color: #FD5A8A; }
+.stat-pill.virals-pill strong { color: #FD5A8A; }
 
 /* FILTER BAR */
-.filter-bar { display: flex; gap: 8px; padding: 16px 24px; border-bottom: 1px solid #1E1535; background: #0D0B1E; }
-.filter-btn { padding: 7px 18px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; border: 1.5px solid #1E1535; background: transparent; color: #7A6B9B; cursor: pointer; transition: all .2s; }
+.filter-bar { display: flex; gap: 8px; padding: 14px 24px; border-bottom: 1px solid #1E1535; background: #0D0B1E; flex-wrap: wrap; align-items: center; }
+.filter-divider { width: 1px; height: 24px; background: #1E1535; margin: 0 4px; flex-shrink: 0; }
+.filter-btn { padding: 7px 18px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; border: 1.5px solid #1E1535; background: transparent; color: #7A6B9B; cursor: pointer; transition: all .2s; white-space: nowrap; }
 .filter-btn.active { background: linear-gradient(135deg, #442AC0, #6B3FE0); border-color: transparent; color: #fff; }
 .filter-btn:not(.active):hover { border-color: #442AC0; color: #9B8FD4; }
+.filter-btn[data-filter="ifans.click"].active { background: linear-gradient(135deg, #3320A0, #5530C8); border-color: transparent; color: #fff; }
+.filter-btn[data-filter="ifans.click"]:not(.active):hover { border-color: #442AC0; color: #8B7FD0; }
+.filter-btn[data-filter="ifans.virals"].active { background: linear-gradient(135deg, #C01050, #FD296C); border-color: transparent; color: #fff; }
+.filter-btn[data-filter="ifans.virals"]:not(.active):hover { border-color: #FD296C; color: #FD5A8A; }
+
+/* PROFILE LABEL IN FILTER */
+.filter-label { font-size: 11px; color: #4A3B6B; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
 
 /* GRID */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; padding: 32px 24px; max-width: 1400px; margin: 0 auto; }
@@ -41,6 +54,7 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
 .card:hover { border-color: #442AC0; transform: translateY(-3px); box-shadow: 0 12px 40px rgba(68,42,192,0.3); }
 .card-wrap.is-posted .card { border-color: rgba(68,192,100,0.4); }
 .card-wrap.is-posted .card:hover { border-color: #5EC87A; box-shadow: 0 12px 40px rgba(68,192,100,0.2); }
+.card-wrap[data-profile="ifans.virals"] .card:hover { border-color: #FD296C; box-shadow: 0 12px 40px rgba(253,41,108,0.3); }
 
 /* THUMB */
 .thumb-wrap { position: relative; width: 100%; padding-bottom: 125%; background: #0D0B1E; overflow: hidden; }
@@ -48,6 +62,15 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
 .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(6,4,16,0.3); opacity: 0; transition: opacity .2s; }
 .card:hover .play-overlay { opacity: 1; }
 .play-icon { width: 52px; height: 52px; background: linear-gradient(135deg,#442AC0,#FD296C); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.card-wrap[data-profile="ifans.virals"] .play-icon { background: linear-gradient(135deg,#C01050,#FD296C); }
+
+/* REEL badge (video duration) */
+.reel-duration { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.75); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 0.03em; }
+
+/* PROFILE BADGE */
+.profile-badge { position: absolute; top: 10px; left: 10px; padding: 4px 10px; border-radius: 100px; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: lowercase; z-index: 10; }
+.profile-badge.click { background: rgba(68,42,192,0.85); color: #C0B4FF; border: 1px solid rgba(68,42,192,0.8); }
+.profile-badge.virals { background: rgba(200,16,80,0.85); color: #FFB0C8; border: 1px solid rgba(253,41,108,0.6); }
 
 /* POSTED BADGE */
 .posted-badge { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: #1A3D2B; border: 2px solid #5EC87A; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 16px; z-index: 10; }
@@ -55,7 +78,8 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
 
 /* CARD BODY */
 .card-body { padding: 16px 18px 14px; }
-.card-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(68,42,192,0.15); border: 1px solid rgba(68,42,192,0.3); border-radius: 100px; font-size: 11px; font-weight: 700; color: #442AC0; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 10px; }
+.card-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(68,42,192,0.15); border: 1px solid rgba(68,42,192,0.3); border-radius: 100px; font-size: 11px; font-weight: 700; color: #7060D0; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 10px; }
+.card-wrap[data-profile="ifans.virals"] .card-tag { background: rgba(253,41,108,0.12); border-color: rgba(253,41,108,0.3); color: #FD6090; }
 .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.35; color: #fff; margin-bottom: 12px; }
 .card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .slides-count { font-size: 12px; color: #7A6B9B; }
@@ -85,9 +109,10 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
   .card-body { padding: 12px 14px 12px; }
   .card-title { font-size: 13px; }
   .open-btn { padding: 6px 12px; font-size: 11px; }
-  .stats-row { gap: 8px; flex-wrap: wrap; }
+  .stats-row { gap: 8px; }
   .filter-bar { padding: 12px 12px; gap: 6px; }
   .filter-btn { padding: 6px 14px; font-size: 12px; }
+  .filter-divider { display: none; }
 }
 @media (max-width: 380px) {
   .grid { grid-template-columns: 1fr; }
@@ -100,21 +125,27 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
   <div class="header-top">
     <div class="brand-badge">iF</div>
     <div class="brand-info">
-      <div class="brand-title"><span>ifans</span>.click &mdash; Posts</div>
+      <div class="brand-title"><span class="accent">ifans</span><span style="color:#7A6B9B">.click</span> &amp; <span class="viral">ifans</span><span style="color:#7A6B9B">.virals</span></div>
       <div class="brand-sub">Conteúdo para criadores digitais</div>
     </div>
   </div>
   <div class="stats-row">
     <div class="stat-pill"><strong id="stat-total">0</strong> posts</div>
+    <div class="stat-pill click-pill"><strong id="stat-click">0</strong> ifans.click</div>
+    <div class="stat-pill virals-pill"><strong id="stat-virals">0</strong> ifans.virals</div>
     <div class="stat-pill posted"><strong id="stat-posted">0</strong> postados</div>
-    <div class="stat-pill"><strong id="stat-remaining">0</strong> restantes</div>
   </div>
 </header>
 
 <div class="filter-bar">
+  <span class="filter-label">Status</span>
   <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">Todos</button>
   <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">A postar</button>
   <button class="filter-btn" data-filter="posted" onclick="setFilter('posted')">Postados</button>
+  <div class="filter-divider"></div>
+  <span class="filter-label">Perfil</span>
+  <button class="filter-btn" data-filter="ifans.click" onclick="setFilter('ifans.click')">ifans.click</button>
+  <button class="filter-btn" data-filter="ifans.virals" onclick="setFilter('ifans.virals')">ifans.virals</button>
 </div>
 
 <div id="grid-container">
@@ -129,12 +160,80 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
 <div class="toast" id="toast"></div>
 
 <script>
+/* ---- DATA ---- */
+/* REGRA: todo post deve ter 'profile' (ifans.click | ifans.virals) e 'type' (carousel | reel).
+   ifans.click = carrosséis de conteúdo educativo.
+   ifans.virals = reels com overlay de alerta viral.
+   Para adicionar: (1) colocar arquivo em carousels/ ou fazer upload do MP4 no S3,
+   (2) adicionar entrada neste array com profile e type corretos,
+   (3) atualizar posts.json, (4) push para main. */
 const POSTS = [
-  { id: 'carousel-01-formatos-virais', title: 'Os 5 formatos de Reel que mais viralizam', tag: 'Formatos', slides: 7, cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-01-formatos-virais.png' },
-  { id: 'carousel-02-erros-engajamento', title: 'Por que seu conteúdo não engaja', tag: 'Erros', slides: 7, cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-02-erros-engajamento.png' },
-  { id: 'carousel-03-roadmap-monetizacao', title: 'De 0 a criador monetizado: o roadmap honesto', tag: 'Monetização', slides: 7, cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-03-roadmap-monetizacao.png' },
-  { id: 'carousel-04-hooks-scroll', title: 'Os ganchos que param o scroll', tag: 'Hooks', slides: 7, cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-04-hooks-scroll.png' },
-  { id: 'carousel-05-metricas-importantes', title: 'As métricas que realmente importam', tag: 'Métricas', slides: 7, cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-05-metricas-importantes.png' }
+  {
+    id: 'carousel-01-formatos-virais',
+    profile: 'ifans.click',
+    type: 'carousel',
+    title: 'Os 5 formatos de Reel que mais viralizam AGORA',
+    tag: 'Viralizacao',
+    slides: 7,
+    date: '2026-07-11',
+    cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-01-formatos-virais.png',
+    file: 'carousels/carousel-01-formatos-virais.html'
+  },
+  {
+    id: 'carousel-02-erros-engajamento',
+    profile: 'ifans.click',
+    type: 'carousel',
+    title: 'Por que seu conteúdo não engaja (e o que fazer hoje)',
+    tag: 'Engajamento',
+    slides: 7,
+    date: '2026-07-11',
+    cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-02-erros-engajamento.png',
+    file: 'carousels/carousel-02-erros-engajamento.html'
+  },
+  {
+    id: 'carousel-03-roadmap-monetizacao',
+    profile: 'ifans.click',
+    type: 'carousel',
+    title: 'De 0 a criador monetizado: o roadmap honesto',
+    tag: 'Monetizacao',
+    slides: 7,
+    date: '2026-07-11',
+    cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-03-roadmap-monetizacao.png',
+    file: 'carousels/carousel-03-roadmap-monetizacao.html'
+  },
+  {
+    id: 'carousel-04-hooks-scroll',
+    profile: 'ifans.click',
+    type: 'carousel',
+    title: 'Os ganchos que param o scroll (com templates reais)',
+    tag: 'Copywriting',
+    slides: 7,
+    date: '2026-07-11',
+    cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-04-hooks-scroll.png',
+    file: 'carousels/carousel-04-hooks-scroll.html'
+  },
+  {
+    id: 'carousel-05-metricas-importantes',
+    profile: 'ifans.click',
+    type: 'carousel',
+    title: 'As métricas que realmente importam pra crescer',
+    tag: 'Analytics',
+    slides: 7,
+    date: '2026-07-11',
+    cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/covers/capa-05-metricas-importantes.png',
+    file: 'carousels/carousel-05-metricas-importantes.html'
+  },
+  {
+    id: 'reel-DJ_7mZkN5M8-overlay-v9',
+    profile: 'ifans.virals',
+    type: 'reel',
+    title: 'Reel viral com overlay Alerta de Vídeo Viral',
+    tag: 'Viral',
+    duration_s: 10.38,
+    date: '2026-07-13',
+    cover: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reels/covers/DJ_7mZkN5M8-overlay-v9-cover.png',
+    video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DJ_7mZkN5M8-overlay-v9.mp4'
+  }
 ];
 
 /* ---- STORAGE ---- */
@@ -163,8 +262,14 @@ function applyFilter() {
   var visible = 0;
   wraps.forEach(function(wrap) {
     var id = wrap.dataset.id;
+    var profile = wrap.dataset.profile;
     var posted = isPosted(id);
-    var show = currentFilter === 'all' || (currentFilter === 'posted' && posted) || (currentFilter === 'pending' && !posted);
+    var show = false;
+    if (currentFilter === 'all') show = true;
+    else if (currentFilter === 'posted') show = posted;
+    else if (currentFilter === 'pending') show = !posted;
+    else if (currentFilter === 'ifans.click') show = profile === 'ifans.click';
+    else if (currentFilter === 'ifans.virals') show = profile === 'ifans.virals';
     wrap.style.display = show ? '' : 'none';
     if (show) visible++;
   });
@@ -176,6 +281,8 @@ function applyFilter() {
     var sub = document.getElementById('empty-sub');
     if (currentFilter === 'posted') sub.textContent = 'Nenhum post marcado como postado ainda.';
     else if (currentFilter === 'pending') sub.textContent = 'Todos os posts já foram postados!';
+    else if (currentFilter === 'ifans.click') sub.textContent = 'Nenhum post para ifans.click ainda.';
+    else if (currentFilter === 'ifans.virals') sub.textContent = 'Nenhum reel para ifans.virals ainda.';
     else sub.textContent = 'Nenhum post encontrado.';
   } else {
     empty.classList.remove('visible');
@@ -185,11 +292,13 @@ function applyFilter() {
 
 /* ---- STATS ---- */
 function updateStats() {
-  var total = POSTS.length;
-  var posted = getPosted().length;
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-posted').textContent = posted;
-  document.getElementById('stat-remaining').textContent = Math.max(0, total - posted);
+  var posted = getPosted();
+  var clickCount = POSTS.filter(function(p) { return p.profile === 'ifans.click'; }).length;
+  var viralsCount = POSTS.filter(function(p) { return p.profile === 'ifans.virals'; }).length;
+  document.getElementById('stat-total').textContent = POSTS.length;
+  document.getElementById('stat-click').textContent = clickCount;
+  document.getElementById('stat-virals').textContent = viralsCount;
+  document.getElementById('stat-posted').textContent = posted.length;
 }
 
 /* ---- UPDATE CARD ---- */
@@ -223,28 +332,62 @@ function showToast(msg, isGood) {
   toastTimer = setTimeout(function() { t.className = 'toast'; }, 2400);
 }
 
+/* ---- FORMAT DURATION ---- */
+function fmtDuration(secs) {
+  var m = Math.floor(secs / 60);
+  var s = Math.round(secs % 60);
+  return (m > 0 ? m + ':' : '') + (s < 10 ? '0' : '') + s + (m === 0 ? 's' : '');
+}
+
 /* ---- RENDER CARDS ---- */
 var grid = document.getElementById('grid');
 POSTS.forEach(function(post) {
   var posted = isPosted(post.id);
+  var isReel = post.type === 'reel';
+  var isVirals = post.profile === 'ifans.virals';
 
   var wrap = document.createElement('div');
   wrap.className = 'card-wrap' + (posted ? ' is-posted' : '');
   wrap.dataset.id = post.id;
+  wrap.dataset.profile = post.profile;
+
+  /* profile badge */
+  var profileBadgeClass = isVirals ? 'virals' : 'click';
+  var profileBadgeLabel = isVirals ? '🔥 ifans.virals' : '📱 ifans.click';
+
+  /* meta info: slides vs duration */
+  var metaLabel = isReel
+    ? '🎬 Reel · ' + fmtDuration(post.duration_s || 0)
+    : post.slides + ' slides';
+
+  /* link: reel → video_url (new tab); carousel → local html */
+  var cardHref, cardTarget;
+  if (isReel) {
+    cardHref = post.video_url || '#';
+    cardTarget = ' target="_blank" rel="noopener"';
+  } else {
+    cardHref = post.file || ('carousels/' + post.id + '.html');
+    cardTarget = '';
+  }
+
+  /* open btn label */
+  var openBtnLabel = isReel ? 'Ver vídeo →' : 'Ver + baixar →';
 
   wrap.innerHTML =
+    '<div class="profile-badge ' + profileBadgeClass + '">' + profileBadgeLabel + '</div>' +
     '<div class="posted-badge">✅</div>' +
-    '<a class="card" href="carousels/' + post.id + '.html">' +
+    '<a class="card" href="' + cardHref + '"' + cardTarget + '>' +
       '<div class="thumb-wrap">' +
         '<img class="thumb-cover" src="' + post.cover + '" loading="lazy" alt="' + post.title + '">' +
-        '<div class="play-overlay"><div class="play-icon">▶</div></div>' +
+        '<div class="play-overlay"><div class="play-icon">' + (isReel ? '▶' : '◀▶') + '</div></div>' +
+        (isReel ? '<div class="reel-duration">' + fmtDuration(post.duration_s || 0) + '</div>' : '') +
       '</div>' +
       '<div class="card-body">' +
-        '<div class="card-tag">📱 ' + post.tag + '</div>' +
+        '<div class="card-tag">' + (isReel ? '🎬' : '📄') + ' ' + post.tag + '</div>' +
         '<div class="card-title">' + post.title + '</div>' +
         '<div class="card-meta">' +
-          '<span class="slides-count">' + post.slides + ' slides</span>' +
-          '<div class="open-btn">Ver + baixar →</div>' +
+          '<span class="slides-count">' + metaLabel + '</span>' +
+          '<div class="open-btn">' + openBtnLabel + '</div>' +
         '</div>' +
       '</div>' +
     '</a>' +
