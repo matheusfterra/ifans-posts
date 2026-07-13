@@ -432,12 +432,28 @@ function closeModalDirect() {
 function downloadVideo() {
   var url = document.getElementById('vmodal-dl').dataset.url;
   if (!url) return;
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = url.split('/').pop();
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  var btn = document.getElementById('vmodal-dl');
+  btn.textContent = '⬇ Baixando...';
+  btn.disabled = true;
+  fetch(url)
+    .then(function(r) { return r.blob(); })
+    .then(function(blob) {
+      var blobUrl = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = url.split('/').pop();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function() { URL.revokeObjectURL(blobUrl); }, 8000);
+      btn.textContent = '⬇ Baixar vídeo';
+      btn.disabled = false;
+    })
+    .catch(function() {
+      window.open(url, '_blank');
+      btn.textContent = '⬇ Baixar vídeo';
+      btn.disabled = false;
+    });
 }
 function copyModalCaption() {
   if (!_modalCaption) return;
