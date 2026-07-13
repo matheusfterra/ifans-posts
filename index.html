@@ -85,6 +85,10 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
 .slides-count { font-size: 12px; color: #7A6B9B; }
 .open-btn { display: flex; align-items: center; gap: 6px; padding: 7px 16px; background: linear-gradient(135deg,#442AC0,#FD296C); border-radius: 100px; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: #fff; }
 
+/* CAPTION BUTTON */
+.caption-btn { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; padding: 8px 0; border-radius: 10px; border: 1.5px solid rgba(253,41,108,0.3); background: rgba(253,41,108,0.07); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: #FD5A8A; cursor: pointer; transition: all .2s; margin-top: 2px; }
+.caption-btn:hover { border-color: #FD296C; color: #fff; background: rgba(253,41,108,0.15); }
+
 /* MARK BUTTON */
 .mark-btn { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; padding: 9px 0; border-radius: 10px; border: 1.5px solid #1E1535; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: #7A6B9B; cursor: pointer; transition: all .2s; margin-top: 2px; }
 .mark-btn:hover { border-color: #5EC87A; color: #5EC87A; background: rgba(68,192,100,0.06); }
@@ -235,16 +239,16 @@ const POSTS = [
     video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DJ_7mZkN5M8-overlay-v9.mp4'
   },
   // Top 10 Reels — processados em 2026-07-13
-  { id: 'reel-DIDsaJlIUE3', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #1 — @mashymi', tag: 'Viral', max_views: 119398958, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DIDsaJlIUE3-overlay.mp4' },
-  { id: 'reel-DHivrnku-OA', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #2 — @the.kalirene', tag: 'Viral', max_views: 105528177, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DHivrnku-OA-overlay.mp4' },
-  { id: 'reel-DCTdG9UupG_', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #3 — @sarah.h44', tag: 'Viral', max_views: 47380511, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DCTdG9UupG_-overlay.mp4' },
-  { id: 'reel-DS0n_X_EXFA', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #4 — @sara_apolloo', tag: 'Viral', max_views: 46505353, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DS0n_X_EXFA-overlay.mp4' },
-  { id: 'reel-C-tS0i6R1BV', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #5 — @jeangreybianca', tag: 'Viral', max_views: 42542599, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/C-tS0i6R1BV-overlay.mp4' },
-  { id: 'reel-DDfjT02xqHW', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #6 — @giuq__', tag: 'Viral', max_views: 42295078, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DDfjT02xqHW-overlay.mp4' },
-  { id: 'reel-DGkpVxwRNnF', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #7 — @bellamantovani1', tag: 'Viral', max_views: 38309068, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DGkpVxwRNnF-overlay.mp4' },
-  { id: 'reel-DRPc_9VE0XV', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #8 — @sweetesamy', tag: 'Viral', max_views: 32354482, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DRPc_9VE0XV-overlay.mp4' },
-  { id: 'reel-DSiwCR6EQTM', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #9 — @asabrinadom', tag: 'Viral', max_views: 30353354, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DSiwCR6EQTM-overlay.mp4' },
-  { id: 'reel-DSxSA6sD4-S', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #10 — @paulinhaludmecpessoall', tag: 'Viral', max_views: 27546067, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DSxSA6sD4-S-overlay.mp4' }
+  { id: 'reel-DIDsaJlIUE3', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #1 — @mashymi', tag: 'Viral', max_views: 119398958, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DIDsaJlIUE3-overlay.mp4', caption: 'Crédito: @mashymi 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' },
+  { id: 'reel-DHivrnku-OA', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #2 — @the.kalirene', tag: 'Viral', max_views: 105528177, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DHivrnku-OA-overlay.mp4', caption: 'Crédito: @the.kalirene 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' },
+  { id: 'reel-DCTdG9UupG_', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #3 — @sarah.h44', tag: 'Viral', max_views: 47380511, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DCTdG9UupG_-overlay.mp4', caption: 'Crédito: @sarah.h44 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' },
+  { id: 'reel-DS0n_X_EXFA', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #4 — @sara_apolloo', tag: 'Viral', max_views: 46505353, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DS0n_X_EXFA-overlay.mp4', caption: 'Crédito: @sara_apolloo 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' },
+  { id: 'reel-C-tS0i6R1BV', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #5 — @jeangreybianca', tag: 'Viral', max_views: 42542599, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/C-tS0i6R1BV-overlay.mp4', caption: 'Crédito: @jeangreybianca 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' },
+  { id: 'reel-DDfjT02xqHW', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #6 — @giuq__', tag: 'Viral', max_views: 42295078, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DDfjT02xqHW-overlay.mp4', caption: 'Crédito: @giuq__ 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' },
+  { id: 'reel-DGkpVxwRNnF', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #7 — @bellamantovani1', tag: 'Viral', max_views: 38309068, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DGkpVxwRNnF-overlay.mp4', caption: 'Crédito: @bellamantovani1 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' },
+  { id: 'reel-DRPc_9VE0XV', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #8 — @sweetesamy', tag: 'Viral', max_views: 32354482, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DRPc_9VE0XV-overlay.mp4', caption: 'Crédito: @sweetesamy 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' },
+  { id: 'reel-DSiwCR6EQTM', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #9 — @asabrinadom', tag: 'Viral', max_views: 30353354, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DSiwCR6EQTM-overlay.mp4', caption: 'Crédito: @asabrinadom 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' },
+  { id: 'reel-DSxSA6sD4-S', profile: 'ifans.virals', type: 'reel', title: 'Top Viral #10 — @paulinhaludmecpessoall', tag: 'Viral', max_views: 27546067, date: '2026-07-13', video_url: 'https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/DSxSA6sD4-S-overlay.mp4', caption: 'Crédito: @paulinhaludmecpessoall 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais' }
 ];
 
 /* ---- STORAGE ---- */
@@ -333,6 +337,23 @@ function handleMark(e, id) {
   showToast(isPosted(id) ? '✅ Marcado como postado!' : '○ Desmarcado', isPosted(id));
 }
 
+/* ---- COPY CAPTION ---- */
+function copyCaption(e, caption) {
+  e.preventDefault();
+  e.stopPropagation();
+  navigator.clipboard.writeText(caption).then(function() {
+    showToast('📋 Legenda copiada!', true);
+  }).catch(function() {
+    var ta = document.createElement('textarea');
+    ta.value = caption;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('📋 Legenda copiada!', true);
+  });
+}
+
 /* ---- TOAST ---- */
 var toastTimer;
 function showToast(msg, isGood) {
@@ -384,6 +405,10 @@ POSTS.forEach(function(post) {
   /* open btn label */
   var openBtnLabel = isReel ? 'Ver vídeo →' : 'Ver + baixar →';
 
+  var captionBtn = (isReel && post.caption)
+    ? '<button class="caption-btn" onclick="copyCaption(event,' + JSON.stringify(post.caption) + ')">📋 Copiar legenda</button>'
+    : '';
+
   wrap.innerHTML =
     '<div class="profile-badge ' + profileBadgeClass + '">' + profileBadgeLabel + '</div>' +
     '<div class="posted-badge">✅</div>' +
@@ -402,6 +427,7 @@ POSTS.forEach(function(post) {
         '</div>' +
       '</div>' +
     '</a>' +
+    captionBtn +
     '<button class="mark-btn" onclick="handleMark(event,\'' + post.id + '\')">' +
       (posted ? '✅ Postado — clique para desmarcar' : '○ Marcar como postado') +
     '</button>';
