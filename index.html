@@ -471,7 +471,7 @@ function fmtDuration(secs) {
 
 /* ---- RENDER CARDS ---- */
 var grid = document.getElementById('grid');
-POSTS.forEach(function(post) {
+POSTS.slice().sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); }).forEach(function(post) {
   var posted = isPosted(post.id);
   var isReel = post.type === 'reel';
   var isVirals = post.profile === 'ifans.virals';
