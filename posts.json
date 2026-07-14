@@ -656,7 +656,9 @@
       "caption": "Crédito: @miangelof 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais",
       "overlay_version": "v11",
       "source_reel": "DZrzsYYyA1I",
-      "source_username": "miangelof"
+      "source_username": "miangelof",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/DZrzsYYyA1I-thumb.jpg",
+      "duration_s": 21.76
     },
     {
       "id": "reel-Dap5hajicHX",
@@ -670,7 +672,9 @@
       "caption": "Crédito: @oliviaaolii 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais",
       "overlay_version": "v11",
       "source_reel": "Dap5hajicHX",
-      "source_username": "oliviaaolii"
+      "source_username": "oliviaaolii",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/Dap5hajicHX-thumb.jpg",
+      "duration_s": 17.28
     }
   ]
 }
