@@ -95,6 +95,16 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
 .card-wrap.is-posted .mark-btn { border-color: rgba(68,192,100,0.4); color: #5EC87A; background: rgba(68,192,100,0.08); }
 .card-wrap.is-posted .mark-btn:hover { background: rgba(68,192,100,0.04); color: #9B8FC0; border-color: #1E1535; }
 
+/* ARCHIVE BUTTON */
+.archive-btn { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; padding: 8px 0; border-radius: 10px; border: 1.5px solid #1E1535; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: #4A3B6B; cursor: pointer; transition: all .2s; margin-top: 4px; }
+.archive-btn:hover { border-color: rgba(253,41,108,0.4); color: #FD5A8A; background: rgba(253,41,108,0.06); }
+.card-wrap.is-archived .archive-btn { border-color: rgba(253,41,108,0.3); color: #FD5A8A; background: rgba(253,41,108,0.07); }
+.card-wrap.is-archived .archive-btn:hover { border-color: #1E1535; color: #4A3B6B; background: transparent; }
+.card-wrap.is-archived .card { opacity: 0.45; filter: grayscale(0.4); }
+.card-wrap.is-archived .card:hover { opacity: 0.7; filter: none; }
+.stat-pill.archived-pill { border-color: rgba(253,41,108,0.25); background: rgba(253,41,108,0.07); color: #FD5A8A; }
+.stat-pill.archived-pill strong { color: #FD5A8A; }
+
 /* EMPTY STATE */
 .empty-state { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px; text-align: center; color: #7A6B9B; }
 .empty-state.visible { display: flex; }
@@ -155,6 +165,7 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
     <div class="stat-pill click-pill"><strong id="stat-click">0</strong> ifans.click</div>
     <div class="stat-pill virals-pill"><strong id="stat-virals">0</strong> ifans.virals</div>
     <div class="stat-pill posted"><strong id="stat-posted">0</strong> postados</div>
+    <div class="stat-pill archived-pill"><strong id="stat-archived">0</strong> arquivados</div>
   </div>
 </header>
 
@@ -163,6 +174,7 @@ header { padding: 20px 24px 16px; background: #0D0B1E; border-bottom: 1px solid 
   <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">Todos</button>
   <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">A postar</button>
   <button class="filter-btn" data-filter="posted" onclick="setFilter('posted')">Postados</button>
+  <button class="filter-btn" data-filter="archived" onclick="setFilter('archived')">🗄 Arquivados</button>
   <div class="filter-divider"></div>
   <span class="filter-label">Perfil</span>
   <button class="filter-btn" data-filter="ifans.click" onclick="setFilter('ifans.click')">ifans.click</button>
@@ -295,6 +307,7 @@ const POSTS = [
 
 /* ---- STORAGE ---- */
 const STORAGE_KEY = 'ifans_posted_v1';
+const ARCHIVE_KEY = 'ifans_archived_v1';
 function getPosted() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; } }
 function setPosted(arr) { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
 function isPosted(id) { return getPosted().indexOf(id) !== -1; }
@@ -303,6 +316,15 @@ function togglePosted(id) {
   var idx = posted.indexOf(id);
   if (idx === -1) posted.push(id); else posted.splice(idx, 1);
   setPosted(posted);
+}
+function getArchived() { try { return JSON.parse(localStorage.getItem(ARCHIVE_KEY) || '[]'); } catch(e) { return []; } }
+function setArchived(arr) { localStorage.setItem(ARCHIVE_KEY, JSON.stringify(arr)); }
+function isArchived(id) { return getArchived().indexOf(id) !== -1; }
+function toggleArchived(id) {
+  var archived = getArchived();
+  var idx = archived.indexOf(id);
+  if (idx === -1) archived.push(id); else archived.splice(idx, 1);
+  setArchived(archived);
 }
 
 /* ---- FILTER ---- */
@@ -321,8 +343,11 @@ function applyFilter() {
     var id = wrap.dataset.id;
     var profile = wrap.dataset.profile;
     var posted = isPosted(id);
+    var archived = isArchived(id);
     var show = false;
-    if (currentFilter === 'all') show = true;
+    if (currentFilter === 'archived') show = archived;
+    else if (archived) show = false; // archived items hidden in all other filters
+    else if (currentFilter === 'all') show = true;
     else if (currentFilter === 'posted') show = posted;
     else if (currentFilter === 'pending') show = !posted;
     else if (currentFilter === 'ifans.click') show = profile === 'ifans.click';
@@ -336,7 +361,8 @@ function applyFilter() {
     empty.classList.add('visible');
     grid.style.display = 'none';
     var sub = document.getElementById('empty-sub');
-    if (currentFilter === 'posted') sub.textContent = 'Nenhum post marcado como postado ainda.';
+    if (currentFilter === 'archived') sub.textContent = 'Nenhum conteúdo arquivado ainda.';
+    else if (currentFilter === 'posted') sub.textContent = 'Nenhum post marcado como postado ainda.';
     else if (currentFilter === 'pending') sub.textContent = 'Todos os posts já foram postados!';
     else if (currentFilter === 'ifans.click') sub.textContent = 'Nenhum post para ifans.click ainda.';
     else if (currentFilter === 'ifans.virals') sub.textContent = 'Nenhum reel para ifans.virals ainda.';
@@ -352,10 +378,12 @@ function updateStats() {
   var posted = getPosted();
   var clickCount = POSTS.filter(function(p) { return p.profile === 'ifans.click'; }).length;
   var viralsCount = POSTS.filter(function(p) { return p.profile === 'ifans.virals'; }).length;
+  var archived = getArchived();
   document.getElementById('stat-total').textContent = POSTS.length;
   document.getElementById('stat-click').textContent = clickCount;
   document.getElementById('stat-virals').textContent = viralsCount;
   document.getElementById('stat-posted').textContent = posted.length;
+  document.getElementById('stat-archived').textContent = archived.length;
 }
 
 /* ---- UPDATE CARD ---- */
@@ -363,9 +391,24 @@ function updateCard(id) {
   var wrap = document.querySelector('.card-wrap[data-id="' + id + '"]');
   if (!wrap) return;
   var posted = isPosted(id);
+  var archived = isArchived(id);
   wrap.classList.toggle('is-posted', posted);
+  wrap.classList.toggle('is-archived', archived);
   var btn = wrap.querySelector('.mark-btn');
   if (btn) btn.textContent = posted ? '✅ Postado — clique para desmarcar' : '○ Marcar como postado';
+  var abtn = wrap.querySelector('.archive-btn');
+  if (abtn) abtn.textContent = archived ? '📂 Arquivado — clique para restaurar' : '🗄 Arquivar (não vou postar)';
+}
+
+/* ---- ARCHIVE HANDLER ---- */
+function handleArchive(e, id) {
+  e.preventDefault();
+  e.stopPropagation();
+  toggleArchived(id);
+  updateCard(id);
+  updateStats();
+  applyFilter();
+  showToast(isArchived(id) ? '🗄 Arquivado!' : '📂 Restaurado!', false);
 }
 
 /* ---- MARK HANDLER ---- */
@@ -502,8 +545,9 @@ POSTS.slice().sort(function(a, b) { return (b.date || '').localeCompare(a.date |
   var isReel = post.type === 'reel';
   var isVirals = post.profile === 'ifans.virals';
 
+  var archived = isArchived(post.id);
   var wrap = document.createElement('div');
-  wrap.className = 'card-wrap' + (posted ? ' is-posted' : '');
+  wrap.className = 'card-wrap' + (posted ? ' is-posted' : '') + (archived ? ' is-archived' : '');
   wrap.dataset.id = post.id;
   wrap.dataset.profile = post.profile;
 
@@ -559,6 +603,9 @@ POSTS.slice().sort(function(a, b) { return (b.date || '').localeCompare(a.date |
     captionBtn +
     '<button class="mark-btn" onclick="handleMark(event,\'' + post.id + '\')">' +
       (posted ? '✅ Postado — clique para desmarcar' : '○ Marcar como postado') +
+    '</button>' +
+    '<button class="archive-btn" onclick="handleArchive(event,\'' + post.id + '\')">' +
+      (archived ? '📂 Arquivado — clique para restaurar' : '🗄 Arquivar (não vou postar)') +
     '</button>';
 
   grid.appendChild(wrap);
