@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updated": "2026-07-14",
+  "updated": "2026-07-15",
   "description": "Registro de posts das contas ifans. REGRA: todo post deve ter 'profile' (ifans.click | ifans.virals) e 'type' (carousel | reel). ifans.click = carrosséis de conteúdo educativo. ifans.virals = reels com overlay de alerta viral. Para adicionar: (1) colocar arquivo em carousels/ ou fazer upload do MP4 no S3, (2) adicionar entrada neste JSON com profile e type corretos, (3) atualizar array POSTS em index.html, (4) push para main.",
   "posts": [
     {
@@ -492,7 +492,7 @@
       "source_reel": "DKDcdRKPpzX",
       "source_username": "vivianvalente10",
       "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/DKDcdRKPpzX-thumb.jpg",
-      "duration_s": 15.81
+      "duration_s": 43.87
     },
     {
       "id": "reel-C--bMPzuI26",
@@ -524,7 +524,7 @@
       "source_reel": "DVvmKz5gVva",
       "source_username": "nofacehousewifee",
       "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/DVvmKz5gVva-thumb.jpg",
-      "duration_s": 31.3
+      "duration_s": 43.87
     },
     {
       "id": "reel-DY99DJWOVdn",
@@ -572,7 +572,7 @@
       "source_reel": "DZIWhFXNj3Y",
       "source_username": "eliolive__",
       "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/DZIWhFXNj3Y-thumb.jpg",
-      "duration_s": 9.27
+      "duration_s": 7.22
     },
     {
       "id": "reel-DUOnB7ngfuI",
@@ -586,7 +586,9 @@
       "caption": "Crédito: @_tahmello 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais",
       "overlay_version": "v11",
       "source_reel": "DUOnB7ngfuI",
-      "source_username": "_tahmello"
+      "source_username": "_tahmello",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/DUOnB7ngfuI-thumb.jpg",
+      "duration_s": 10.63
     },
     {
       "id": "reel-DaNsfT7JIba",
@@ -600,7 +602,9 @@
       "caption": "Crédito: @_brucb_ 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais",
       "overlay_version": "v11",
       "source_reel": "DaNsfT7JIba",
-      "source_username": "_brucb_"
+      "source_username": "_brucb_",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/DaNsfT7JIba-thumb.jpg",
+      "duration_s": 11.59
     },
     {
       "id": "reel-DaqCZMhtFXs",
@@ -614,7 +618,9 @@
       "caption": "Crédito: @alinenovakoficial 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais",
       "overlay_version": "v11",
       "source_reel": "DaqCZMhtFXs",
-      "source_username": "alinenovakoficial"
+      "source_username": "alinenovakoficial",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/DaqCZMhtFXs-thumb.jpg",
+      "duration_s": 37.17
     },
     {
       "id": "reel-DUylFObkrC4",
@@ -628,7 +634,9 @@
       "caption": "Crédito: @emillymoraesberbel 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais",
       "overlay_version": "v11",
       "source_reel": "DUylFObkrC4",
-      "source_username": "emillymoraesberbel"
+      "source_username": "emillymoraesberbel",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/DUylFObkrC4-thumb.jpg",
+      "duration_s": 24.13
     },
     {
       "id": "reel-DZsW0bQxVse",
@@ -642,7 +650,9 @@
       "caption": "Crédito: @anaste_rochaa 🔥\n.\n.\n.\n#viral #reels #foryou #trending #virais",
       "overlay_version": "v11",
       "source_reel": "DZsW0bQxVse",
-      "source_username": "anaste_rochaa"
+      "source_username": "anaste_rochaa",
+      "cover": "https://s3.us-east-1.amazonaws.com/cdn.digital-ai.tech/uploads/media-cortex/ifans/reel-frame/thumbs/DZsW0bQxVse-thumb.jpg",
+      "duration_s": 8.13
     },
     {
       "id": "reel-DZrzsYYyA1I",
